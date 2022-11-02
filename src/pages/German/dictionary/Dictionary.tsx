@@ -14,19 +14,19 @@ const Dictionary: React.FC = () => {
   const methods = useForm<AddWordForm>()
   const { control } = methods
 
-  const { translateWord, engWord } = useWatch<AddWordForm>({ control })
+  const { translateWord, germanWord } = useWatch<AddWordForm>({ control })
   const { translations } = useLiveTranslations()
 
   const filteredTranslations = useMemo(() => {
     return translations.filter(t => {
-      return t.engWord.includes(engWord ?? '') && t.translate.includes(translateWord ?? '')
+      return t.germanWord.includes(germanWord ?? '') && t.translate.includes(translateWord ?? '')
     })
-  }, [translateWord, engWord, translations])
+  }, [translateWord, germanWord, translations])
 
   return (
     <>
       <Title sx={{ mb: 4 }} variant={'h4'}>
-        Словничок з англійської мови
+        Словничок з німецької мови
       </Title>
       <Form methods={methods} />
       <TranslateList rows={filteredTranslations} />

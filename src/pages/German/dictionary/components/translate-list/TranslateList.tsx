@@ -1,25 +1,26 @@
 import React, { memo } from 'react'
 
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
+
 import { Box } from '@mui/material'
+
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-import { EnglishTranslationGrid } from 'pages/English/dictionary/interfaces'
-import { addTranslations, deleteOneTranslation } from 'api/dictionary/dictionary'
+import { TranslationGrid } from 'pages/German/dictionary/interfaces'
+import { addTranslations, deleteOneTranslation } from 'api/dictionary/german/dictionary'
 
 interface TranslateListProps {
-  rows: EnglishTranslationGrid[]
+  rows: TranslationGrid[]
 }
 
 const TranslateList: React.FC<TranslateListProps> = ({ rows }) => {
-  console.log('===rows===', rows)
-  const handleDelete = async (engWord: string | number) => {
-    await deleteOneTranslation(String(engWord))
+  const handleDelete = async (germanWord: string | number) => {
+    await deleteOneTranslation(String(germanWord))
   }
 
   const columns: GridColDef[] = [
-    { field: 'engWord', headerName: 'Англійське слово', width: 150 },
+    { field: 'germanWord', headerName: 'Німецьке слово', width: 150 },
     {
       field: 'translate',
       headerName: 'Переклад',
@@ -39,10 +40,10 @@ const TranslateList: React.FC<TranslateListProps> = ({ rows }) => {
     },
   ]
 
-  const handleCellEdited = async (newRow: EnglishTranslationGrid) => {
-    const { engWord, translate } = newRow
+  const handleCellEdited = async (newRow: TranslationGrid) => {
+    const { germanWord, translate } = newRow
     const translateArr = translate.split(',').map(t => t.trim().toLowerCase())
-    await addTranslations({ englishWord: engWord, translations: translateArr })
+    await addTranslations({ germanWord, translations: translateArr })
     return newRow
   }
 
@@ -58,7 +59,7 @@ const TranslateList: React.FC<TranslateListProps> = ({ rows }) => {
         experimentalFeatures={{ newEditingApi: true }}
         processRowUpdate={handleCellEdited}
         sortModel={[
-          { field: 'engWord', sort: 'asc' },
+          { field: 'germanWord', sort: 'asc' },
           { field: 'translate', sort: 'asc' },
         ]}
       />

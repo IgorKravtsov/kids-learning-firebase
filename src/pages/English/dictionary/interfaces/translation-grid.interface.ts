@@ -1,5 +1,9 @@
-import { Translation } from "interfaces";
+import { EnglishTranslation, GermanTranslation } from 'interfaces'
 
-export interface TranslationGrid extends Translation {
-  id: string;
+export interface GermanTranslationGrid extends GermanTranslation {
+  id: string
+}
+
+export interface EnglishTranslationGrid extends EnglishTranslation {
+  id: string
 }

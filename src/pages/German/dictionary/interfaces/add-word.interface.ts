@@ -1,4 +1,4 @@
 export interface AddWordForm {
-  engWord?: string
+  germanWord?: string
   translateWord?: string
 }

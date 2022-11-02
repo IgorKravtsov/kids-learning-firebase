@@ -7,8 +7,8 @@ import LoadingButton from '@mui/lab/LoadingButton'
 
 import FormInput from 'components/formInput/FormInput'
 
-import { AddWordForm } from 'pages/English/dictionary/interfaces'
-import { addTranslations } from 'api/dictionary/dictionary'
+import { AddWordForm } from 'pages/German/dictionary/interfaces'
+import { addTranslations } from 'api/dictionary/german/dictionary'
 
 interface FormProps {
   methods: UseFormReturn<AddWordForm>
@@ -20,17 +20,17 @@ export const Form: React.FC<FormProps> = ({ methods }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit = async (data: AddWordForm) => {
-    const { translateWord, engWord } = data
+    const { translateWord, germanWord } = data
 
-    if (!translateWord || !engWord) return
+    if (!translateWord || !germanWord) return
     const translations = translateWord.split(',').map(t => t.toLowerCase().trim())
 
     setIsLoading(true)
     await addTranslations({
-      englishWord: engWord,
+      germanWord,
       translations,
     })
-    setValue('engWord', '')
+    setValue('germanWord', '')
     setValue('translateWord', '')
     setIsLoading(false)
   }
@@ -40,7 +40,7 @@ export const Form: React.FC<FormProps> = ({ methods }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container justifyContent={'center'} alignItems={'center'}>
           <Grid item md={4} sx={{ mr: 1, mt: 1 }}>
-            <FormInput {...register('engWord')} label={'Англійське слово'} />
+            <FormInput {...register('germanWord')} label={'Німецьке слово'} />
           </Grid>
           <Grid item md={4} sx={{ mr: 1, mt: 1 }}>
             <FormInput {...register('translateWord')} label={'Переклад'} />
