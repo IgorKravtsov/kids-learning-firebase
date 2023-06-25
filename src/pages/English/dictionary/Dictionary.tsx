@@ -12,7 +12,6 @@ import { useLiveTranslations } from "./useLiveTranslations";
 import Button from "@mui/material/Button";
 import { DownloadModal } from "pages/English/dictionary/components/download-modal/DownloadModal";
 import Grid from "@mui/material/Grid";
-import { addManyTranslations } from "api/dictionary/dictionary";
 
 const Dictionary: FC = () => {
   const [isSaveModalOpened, setIsSaveModalOpened] = useState(false);
@@ -21,7 +20,7 @@ const Dictionary: FC = () => {
 
   const { translateWord, engWord } = useWatch<AddWordForm>({ control });
   const { translations } = useLiveTranslations();
-  const [file, setFile] = useState<File | null>(null);
+  // const [file, setFile] = useState<File | null>(null);
 
   const filteredTranslations = useMemo(() => {
     return translations.filter((t) => {
@@ -34,41 +33,41 @@ const Dictionary: FC = () => {
 
   const handleClose = () => setIsSaveModalOpened(false);
 
-  const test = () => {
-    const fr = new FileReader();
-
-    const prepareTranslation = (translation: string) => {
-      const res = translation.trim();
-      if (res[res.length - 1] === ",") {
-        return res.slice(0, res.length - 1);
-      }
-      return res;
-    };
-
-    fr.onload = async () => {
-      const result = fr.result
-        ?.toString()
-        .split("\t")
-        .map((t) => t.split(".")[1])
-        .filter(Boolean)
-        .map((t) => t.split("\n")[0])
-        .filter(Boolean)
-        .map((t) => t.split(" - "))
-        .reduce((acc, [eng, ...translates]) => {
-          // @ts-ignore
-          acc[eng.trim()] = translates.map(prepareTranslation);
-          return acc;
-        }, {});
-      console.log("===fr.result===", result);
-      if (result) {
-        await addManyTranslations({ dictionary: result });
-      }
-    };
-
-    if (file) {
-      fr.readAsText(file);
-    }
-  };
+  // const test = () => {
+  //   const fr = new FileReader();
+  //
+  //   const prepareTranslation = (translation: string) => {
+  //     const res = translation.trim();
+  //     if (res[res.length - 1] === ",") {
+  //       return res.slice(0, res.length - 1);
+  //     }
+  //     return res;
+  //   };
+  //
+  //   fr.onload = async () => {
+  //     const result = fr.result
+  //       ?.toString()
+  //       .split("\t")
+  //       .map((t) => t.split(".")[1])
+  //       .filter(Boolean)
+  //       .map((t) => t.split("\n")[0])
+  //       .filter(Boolean)
+  //       .map((t) => t.split(" - "))
+  //       .reduce((acc, [eng, ...translates]) => {
+  //         // @ts-ignore
+  //         acc[eng.trim()] = translates.map(prepareTranslation);
+  //         return acc;
+  //       }, {});
+  //     console.log("===fr.result===", result);
+  //     if (result) {
+  //       await addManyTranslations({ dictionary: result });
+  //     }
+  //   };
+  //
+  //   if (file) {
+  //     fr.readAsText(file);
+  //   }
+  // };
 
   return (
     <>
@@ -87,11 +86,11 @@ const Dictionary: FC = () => {
           Зберегти слова
         </Button>
       </Grid>
-      <Button onClick={test}>Test</Button>
-      <input
-        type={"file"}
-        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-      />
+      {/*<Button onClick={test}>Test</Button>*/}
+      {/*<input*/}
+      {/*  type={"file"}*/}
+      {/*  onChange={(e) => setFile(e.target.files?.[0] ?? null)}*/}
+      {/*/>*/}
     </>
   );
 };
