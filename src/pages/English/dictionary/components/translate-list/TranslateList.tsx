@@ -25,8 +25,28 @@ const TranslateList: React.FC<TranslateListProps> = ({ rows }) => {
     {
       field: "translate",
       headerName: "Переклад",
-      width: 500,
+      width: 400,
       editable: true,
+    },
+    {
+      field: "createdAt",
+      headerName: "Створено",
+      width: 200,
+      editable: true,
+      renderCell: ({ value }) => {
+        const date = new Date(value as string);
+        return date.toLocaleString();
+      },
+    },
+    {
+      field: "updatedAt",
+      headerName: "Оновлено",
+      width: 200,
+      editable: true,
+      renderCell: ({ value }) => {
+        const date = new Date(value as string);
+        return date.toLocaleString();
+      },
     },
     {
       field: "action",
@@ -61,10 +81,10 @@ const TranslateList: React.FC<TranslateListProps> = ({ rows }) => {
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
         processRowUpdate={handleCellEdited}
-        sortModel={[
-          { field: "engWord", sort: "asc" },
-          { field: "translate", sort: "asc" },
-        ]}
+        // sortModel={[
+        //   { field: "engWord", sort: "asc" },
+        //   { field: "translate", sort: "asc" },
+        // ]}
       />
     </Box>
   );
