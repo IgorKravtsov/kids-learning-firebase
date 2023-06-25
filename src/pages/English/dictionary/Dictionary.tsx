@@ -33,6 +33,12 @@ const Dictionary: FC = () => {
 
   const handleClose = () => setIsSaveModalOpened(false);
 
+  /*To make this func work file must be the next:
+   * 1. word - слово,
+   * 2. Translation - переклад, тлумачення,
+   * 3. snow - сніг, сніговий, сніжний,
+   * 4. Onions - цибуля, лук, цибулина,
+   * */
   // const test = () => {
   //   const fr = new FileReader();
   //
