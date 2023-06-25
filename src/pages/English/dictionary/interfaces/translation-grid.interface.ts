@@ -1,9 +1,11 @@
-import { EnglishTranslation, GermanTranslation } from 'interfaces'
+import { EnglishTranslation, GermanTranslation } from "interfaces";
 
 export interface GermanTranslationGrid extends GermanTranslation {
-  id: string
+  id: string;
 }
 
 export interface EnglishTranslationGrid extends EnglishTranslation {
-  id: string
+  id: string;
+  createdAt?: any;
+  updatedAt?: any;
 }

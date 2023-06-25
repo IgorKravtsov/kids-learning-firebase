@@ -1,11 +1,16 @@
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  onSnapshot,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 
 import { auth, db } from "config/firebase.config";
 
 import { usersCollectionName } from "../user/user.types";
 import { getUserByEmail } from "../user/user";
 
-import { AddTranslationReq } from "./dictionary.types";
+import { AddManyTranslationsReq, AddTranslationReq } from "./dictionary.types";
 
 export const userRef = doc(
   db,
@@ -34,12 +39,40 @@ export const addTranslations = async ({
   const user = await getUserByEmail(auth.currentUser?.email ?? "");
   const dict = user?.dictionary ?? {};
 
-  const updatedTranslations = translations.filter((t) => !!t);
+  const updatedTranslations = translations.filter(Boolean);
 
   await updateDoc(userRef, {
     dictionary: {
       ...dict,
-      [englishWord]: Array.from(new Set(updatedTranslations)),
+      [englishWord]: {
+        createdAt: dict?.[englishWord]?.createdAt ?? serverTimestamp(),
+        updatedAt: serverTimestamp(),
+        translations: Array.from(new Set(updatedTranslations)),
+      },
+    },
+  });
+};
+
+export const addManyTranslations = async ({
+  dictionary,
+}: AddManyTranslationsReq) => {
+  const user = await getUserByEmail(auth.currentUser?.email ?? "");
+  const dict = user?.dictionary ?? {};
+
+  const requestDict = Object.entries(dictionary).reduce((acc, [key, value]) => {
+    // @ts-ignore
+    acc[key] = {
+      createdAt: dict?.[key] ? dict[key]?.createdAt : serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      translations: Array.from(new Set(value)),
+    };
+    return acc;
+  }, {});
+
+  await updateDoc(userRef, {
+    dictionary: {
+      ...dict,
+      ...requestDict,
     },
   });
 };
