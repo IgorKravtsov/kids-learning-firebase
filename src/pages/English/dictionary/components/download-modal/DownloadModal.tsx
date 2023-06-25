@@ -6,16 +6,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   FormGroup,
-  FormLabel,
-  Input,
-  Radio,
-  RadioGroup,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { useAuth } from "hooks/useAuth";
-import { TranslationGrid } from "pages/German/dictionary/interfaces";
 import { EnglishTranslationGrid } from "pages/English/dictionary/interfaces";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
