@@ -7,7 +7,7 @@ import { MenuItem } from "menuItems";
 
 export interface DrawerListItemProps {
   item: MenuItem;
-  toggleFunc: (
+  toggleFunc?: (
     isOpen: boolean,
     e?: React.KeyboardEvent | React.MouseEvent
   ) => void;

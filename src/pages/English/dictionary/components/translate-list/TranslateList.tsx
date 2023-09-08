@@ -25,13 +25,13 @@ const TranslateList: React.FC<TranslateListProps> = ({ rows }) => {
     {
       field: "translate",
       headerName: "Переклад",
-      width: 400,
+      width: 220,
       editable: true,
     },
     {
       field: "createdAt",
       headerName: "Створено",
-      width: 200,
+      width: 180,
       editable: true,
       renderCell: ({ value }) => {
         const date = new Date(value as string);
@@ -41,7 +41,7 @@ const TranslateList: React.FC<TranslateListProps> = ({ rows }) => {
     {
       field: "updatedAt",
       headerName: "Оновлено",
-      width: 200,
+      width: 180,
       editable: true,
       renderCell: ({ value }) => {
         const date = new Date(value as string);

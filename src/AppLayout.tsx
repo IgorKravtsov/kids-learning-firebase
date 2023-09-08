@@ -11,10 +11,14 @@ import { useAppDispatch, useAppSelector } from "storage/hooks/typedHooks";
 import { clear, selectSnackbar } from "storage/slices/snackbarSlice";
 
 import LoadingSkeleton from "components/loadingSkeleton/LoadingSkeleton";
+import { Container } from "@mui/material";
+import { useMedia } from "hooks/useMedia";
+import DrawerList from "components/drownerList/DrawerList";
 
 const AppLayout: React.FC = (): React.ReactElement => {
   const { isAuth } = useAuth();
   const { openSnack, snackType, message } = useAppSelector(selectSnackbar);
+  const { isDesktop } = useMedia();
 
   const dispatch = useAppDispatch();
 
@@ -27,7 +31,14 @@ const AppLayout: React.FC = (): React.ReactElement => {
   };
 
   return (
-    <Suspense fallback={<LoadingSkeleton />}>
+    <Suspense
+      fallback={
+        <Container>
+          <LoadingSkeleton />
+        </Container>
+      }
+    >
+      {isDesktop && <DrawerList className="menu_list" />}
       <Routes>
         {!isAuth ? [...defaultRoutes] : [...authRoutes]}
         {/*{isAdmin && [...adminRoutes]}*/}

@@ -7,22 +7,24 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import { Container } from "@mui/material";
 
+import AuthMenu from "components/header/AuthMenu";
 import DrawerList from "../drownerList/DrawerList";
 import { RouteName } from "routes";
 import { useAuth } from "hooks/useAuth";
-import { Container } from "@mui/material";
-import AuthMenu from "components/header/AuthMenu";
 import AnonymusMenu from "./AnonymusMenu";
+import { useMedia } from "hooks/useMedia";
 
 const Header: React.FC = (): React.ReactElement => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const { isAuth } = useAuth();
+  const { isDesktop } = useMedia();
 
-  const [isDrownerVisible, setIsDrownerVisible] = useState(
-    location.pathname === RouteName.HOME
+  const [isDrawerVisible, setIsDrawerVisible] = useState(
+    location.pathname === RouteName.HOME && !isDesktop
   );
 
   const toggleDrawer = (
@@ -37,36 +39,26 @@ const Header: React.FC = (): React.ReactElement => {
     )
       return;
 
-    setIsDrownerVisible(isOpen);
+    setIsDrawerVisible(isOpen);
   };
-
-  // const handleMenu = (e: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(e.currentTarget)
-  // }
-
-  // const handleClose = () => {
-  //   setAnchorEl(null)
-  // }
-
-  // const handleLogout = async () => {
-  //   await dispatch(logout())
-  // }
 
   return (
     <>
       <AppBar position="static">
         <Container>
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={() => toggleDrawer(true)}
-            >
-              <MenuIcon />
-            </IconButton>
+            {!isDesktop && (
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                onClick={() => toggleDrawer(true)}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
 
             <Typography
               variant="h6"
@@ -81,13 +73,15 @@ const Header: React.FC = (): React.ReactElement => {
         </Container>
       </AppBar>
 
-      <SwipeableDrawer
-        open={isDrownerVisible}
-        onClose={() => toggleDrawer(false)}
-        onOpen={() => toggleDrawer(true)}
-      >
-        <DrawerList toggleFunc={toggleDrawer} />
-      </SwipeableDrawer>
+      {!isDesktop && (
+        <SwipeableDrawer
+          open={isDrawerVisible}
+          onClose={() => toggleDrawer(false)}
+          onOpen={() => toggleDrawer(true)}
+        >
+          <DrawerList toggleFunc={toggleDrawer} width={250} />
+        </SwipeableDrawer>
+      )}
     </>
   );
 };

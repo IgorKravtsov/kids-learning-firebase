@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 
 const English: React.FC = () => {
   return (
-    <Container>
+    <Container maxWidth="md">
       <Outlet />
     </Container>
   );

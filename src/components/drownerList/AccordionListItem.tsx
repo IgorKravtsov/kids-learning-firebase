@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 export interface AccordionListItemProps {
   item: MenuItem;
-  toggleFunc: (
+  toggleFunc?: (
     isOpen: boolean,
     e?: React.KeyboardEvent | React.MouseEvent
   ) => void;
@@ -31,7 +31,7 @@ const AccordionListItem: React.FC<AccordionListItemProps> = ({
   const navigate = useNavigate();
 
   const handleClickItem = (link?: string) => () => {
-    toggleFunc(false);
+    toggleFunc?.(false);
     navigate(link ?? "");
   };
 

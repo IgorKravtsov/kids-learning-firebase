@@ -14,19 +14,23 @@ import { useAuth } from "hooks/useAuth";
 import DrawerListItem from "./DrawerListItem";
 
 export interface DrownerListProps {
-  toggleFunc: (
+  toggleFunc?: (
     isOpen: boolean,
     e?: React.KeyboardEvent | React.MouseEvent
   ) => void;
+  className?: string;
+  width?: number;
 }
 
 const DrawerList: React.FC<DrownerListProps> = ({
   toggleFunc,
+  className,
+  width = 200,
 }): React.ReactElement => {
   const { isAuth, isAdmin } = useAuth();
 
   return (
-    <Box sx={{ width: 250 }} role="presentation">
+    <Box sx={{ width }} role="presentation" className={className}>
       <List>
         {isAuth
           ? loggedInMenuItems.map((item, index) => (

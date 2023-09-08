@@ -3,9 +3,6 @@ import { Route } from "react-router-dom";
 
 const Home = React.lazy(() => import("./pages/Home/Home"));
 const Math = React.lazy(() => import("./pages/Math/Math"));
-const Ukrainian = React.lazy(() => import("./pages/Ukrainian/Ukrainian"));
-const Russian = React.lazy(() => import("./pages/Russian/Russian"));
-const Art = React.lazy(() => import("./pages/Art/Art"));
 const MathSums = React.lazy(() => import("./pages/Math/sums/Sums"));
 const Login = React.lazy(() => import("./pages/Login/Login"));
 const Register = React.lazy(() => import("./pages/Register/Register"));
@@ -78,20 +75,6 @@ export const authRoutes: React.ReactNode[] = [
   <Route key={RouteName.MATH} path={RouteName.MATH} element={<Math />}>
     <Route path={"sums"} element={<MathSums />} />
   </Route>,
-
-  <Route
-    key={RouteName.UKRAINIAN}
-    path={RouteName.UKRAINIAN}
-    element={<Ukrainian />}
-  />,
-
-  <Route
-    key={RouteName.RUSSIAN}
-    path={RouteName.RUSSIAN}
-    element={<Russian />}
-  />,
-
-  <Route key={RouteName.ART} path={RouteName.ART} element={<Art />} />,
 
   <Route key={RouteName.ENGLISH} path={RouteName.ENGLISH} element={<English />}>
     <Route path={"dictionary"} element={<EnglishDictionary />} />

@@ -7,7 +7,7 @@ import Container from "@mui/material/Container";
 
 const Math: React.FC = (): React.ReactElement => {
   return (
-    <Container className={styles.wrapper}>
+    <Container className={styles.wrapper} maxWidth="md">
       <Outlet />
     </Container>
   );
