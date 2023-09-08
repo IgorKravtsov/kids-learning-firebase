@@ -13,18 +13,21 @@ export interface DrawerListItemProps {
   ) => void;
 }
 
-const DrawerListItem: React.FC<DrawerListItemProps> = ({ item, toggleFunc }): React.ReactElement => {
-  const { items } = item
+const DrawerListItem: React.FC<DrawerListItemProps> = ({
+  item,
+  toggleFunc,
+}): React.ReactElement => {
+  const { items } = item;
 
   return (
     <>
-      {items && items?.length > 0 ? (
+      {items && items.length > 0 ? (
         <AccordionListItem item={item} toggleFunc={toggleFunc} />
       ) : (
         <SimpleListItem item={item} toggleFunc={toggleFunc} />
       )}
     </>
-  )
-}
+  );
+};
 
-export default DrawerListItem
+export default DrawerListItem;

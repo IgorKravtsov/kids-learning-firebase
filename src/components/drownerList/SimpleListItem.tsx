@@ -24,7 +24,7 @@ const SimpleListItem: React.FC<SimpleListItemProps> = ({
 
   return (
     <ListItem button component={"li"}>
-      <Link to={link} className={classes.link}>
+      <Link to={link ?? ""} className={classes.link}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={name} />
       </Link>

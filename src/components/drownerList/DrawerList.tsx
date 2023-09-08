@@ -6,12 +6,12 @@ import Divider from "@mui/material/Divider";
 
 import {
   adminAdditionalMenuItems,
-  MenuItem,
-  subjects,
+  loggedInMenuItems,
   unLoggedUserMenuList,
-} from "../../menuItems";
-import DrawerListItem from "./DrawerListItem";
+} from "menuItems";
 import { useAuth } from "hooks/useAuth";
+
+import DrawerListItem from "./DrawerListItem";
 
 export interface DrownerListProps {
   toggleFunc: (
@@ -23,37 +23,23 @@ export interface DrownerListProps {
 const DrawerList: React.FC<DrownerListProps> = ({
   toggleFunc,
 }): React.ReactElement => {
-  const { isAuth, isAdmin, user } = useAuth();
-
-  console.log("===user===", user);
+  const { isAuth, isAdmin } = useAuth();
 
   return (
     <Box sx={{ width: 250 }} role="presentation">
       <List>
         {isAuth
-          ? subjects.map((item: MenuItem) => (
-              <DrawerListItem
-                key={item.id}
-                toggleFunc={toggleFunc}
-                item={item}
-              />
+          ? loggedInMenuItems.map((item, index) => (
+              <DrawerListItem key={index} toggleFunc={toggleFunc} item={item} />
             ))
-          : unLoggedUserMenuList.map((item: MenuItem) => (
-              <DrawerListItem
-                key={item.id}
-                toggleFunc={toggleFunc}
-                item={item}
-              />
+          : unLoggedUserMenuList.map((item, index) => (
+              <DrawerListItem key={index} toggleFunc={toggleFunc} item={item} />
             ))}
         {isAdmin && (
           <>
             <Divider />
-            {adminAdditionalMenuItems.map((item) => (
-              <DrawerListItem
-                key={item.id}
-                toggleFunc={toggleFunc}
-                item={item}
-              />
+            {adminAdditionalMenuItems.map((item, index) => (
+              <DrawerListItem key={index} toggleFunc={toggleFunc} item={item} />
             ))}
           </>
         )}
