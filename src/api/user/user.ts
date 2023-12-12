@@ -21,6 +21,7 @@ export const getUserById = async (uid: string) => {
 
 export const getUserByEmail = async (email: string) => {
   if (!email) return;
+
   const q = query(usersRef, where("email", "==", email), limit(1));
 
   const querySnapshot = await getDocs(q);
