@@ -1,54 +1,79 @@
-import React, { memo } from 'react'
+import React, { memo } from "react";
 
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-import { Box } from '@mui/material'
+import { Box } from "@mui/material";
 
-import IconButton from '@mui/material/IconButton'
-import DeleteIcon from '@mui/icons-material/Delete'
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-import { TranslationGrid } from 'pages/German/dictionary/interfaces'
-import { addTranslations, deleteOneTranslation } from 'api/dictionary/german/dictionary'
+import { TranslationGrid } from "pages/German/dictionary/interfaces";
+import {
+  addTranslations,
+  deleteOneTranslation,
+} from "api/dictionary/german/dictionary";
 
 interface TranslateListProps {
-  rows: TranslationGrid[]
+  rows: TranslationGrid[];
 }
 
 const TranslateList: React.FC<TranslateListProps> = ({ rows }) => {
   const handleDelete = async (germanWord: string | number) => {
-    await deleteOneTranslation(String(germanWord))
-  }
+    await deleteOneTranslation(String(germanWord));
+  };
 
   const columns: GridColDef[] = [
-    { field: 'germanWord', headerName: 'Німецьке слово', width: 150 },
+    { field: "germanWord", headerName: "Німецьке слово", width: 150 },
     {
-      field: 'translate',
-      headerName: 'Переклад',
-      width: 500,
+      field: "translate",
+      headerName: "Переклад",
+      width: 220,
       editable: true,
     },
     {
-      field: 'action',
-      headerName: '',
-      renderCell: ({ id }) => {
-        return (
-          <IconButton onClick={() => handleDelete(id)} aria-label='delete'>
-            <DeleteIcon />
-          </IconButton>
-        )
+      field: "createdAt",
+      headerName: "Створено",
+      width: 180,
+      editable: true,
+      renderCell: ({ value }) => {
+        const date = new Date(value as string);
+        return date.toLocaleString();
       },
     },
-  ]
+    {
+      field: "updatedAt",
+      headerName: "Оновлено",
+      width: 180,
+      editable: true,
+      renderCell: ({ value }) => {
+        const date = new Date(value as string);
+        return date.toLocaleString();
+      },
+    },
+    {
+      field: "action",
+      headerName: "",
+      renderCell: ({ id }) => {
+        return (
+          <IconButton onClick={() => handleDelete(id)} aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        );
+      },
+    },
+  ];
 
   const handleCellEdited = async (newRow: TranslationGrid) => {
-    const { germanWord, translate } = newRow
-    const translateArr = translate.split(',').map(t => t.trim().toLowerCase())
-    await addTranslations({ germanWord, translations: translateArr })
-    return newRow
-  }
+    const { germanWord, translate } = newRow;
+    const translateArr = translate
+      .split(",")
+      .map((t) => t.trim().toLowerCase());
+    await addTranslations({ germanWord, translations: translateArr });
+    return newRow;
+  };
 
   return (
-    <Box sx={{ height: 500, width: '100%', mt: 2 }}>
+    <Box sx={{ height: 500, width: "100%", mt: 2 }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -59,12 +84,12 @@ const TranslateList: React.FC<TranslateListProps> = ({ rows }) => {
         experimentalFeatures={{ newEditingApi: true }}
         processRowUpdate={handleCellEdited}
         sortModel={[
-          { field: 'germanWord', sort: 'asc' },
-          { field: 'translate', sort: 'asc' },
+          { field: "germanWord", sort: "asc" },
+          { field: "translate", sort: "asc" },
         ]}
       />
     </Box>
-  )
-}
+  );
+};
 
-export default memo(TranslateList)
+export default memo(TranslateList);
