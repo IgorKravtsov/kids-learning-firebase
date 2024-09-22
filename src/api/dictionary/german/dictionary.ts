@@ -65,3 +65,19 @@ export const deleteOneTranslation = async (germanWord: string) => {
     germanDictionary: dict,
   });
 };
+
+export const migrateDictionary = async () => {
+  const user = await getUserByEmail(auth.currentUser?.email ?? "");
+  const dict = user?.germanDictionary ?? {};
+  const updatedDict: Record<string, {}> = {};
+  for (const germanWord in dict) {
+    updatedDict[germanWord] = {
+      createdAt: dict[germanWord]?.createdAt ?? serverTimestamp(),
+      updatedAt: dict[germanWord]?.updatedAt ?? serverTimestamp(),
+      translations: dict[germanWord],
+    };
+  }
+  await updateDoc(userRef, {
+    germanDictionary: updatedDict,
+  });
+};
